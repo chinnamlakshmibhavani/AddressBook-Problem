@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 public class AddressBookProblem
 {
@@ -21,7 +21,8 @@ public class AddressBookProblem
             System.out.println("3.display all contacts");
             System.out.println("4.view contact information");
             System.out.println("5.edit contact information");
-            System.out.println("6.exit");
+            System.out.println("6.delete contact");
+            System.out.println("7.exit");
             System.out.print("enter your choice:");
             String choice = scanner.nextLine().trim();
             switch (choice) 
@@ -42,6 +43,9 @@ public class AddressBookProblem
                     addressBook.editContactInformation();
                     break;
                 case "6":
+                    addressBook.deleteContact();
+                    break;
+                case "7" :
                     System.out.println("Closing");
                     System.exit(0);
                 default:
@@ -229,5 +233,38 @@ class AddressBook
         }
         
     }
+    void deleteContact()
+    {
+        System.out.print("enter contact name to delete:");
+        String contactName = scanner.nextLine().trim();
+        File file = new File(contactName);
+        if(file.exists())
+        {
+            if(file.delete())
+            {
+                if(emptyContacts.contains(contactName))
+                {
+                    emptyContacts.remove(contactName);
+                }
+                else
+                {
+                    nonEmptyContacts.remove(contactName);
+                }
+                System.out.println(contactName + " is deleted succesfully");
+            }
+            else
+            {
+                System.out.println("file deletion failed");
+            }
+
+        }
+        else
+        {
+            System.out.println(contactName + "doesn't exists");
+        }
+    }
 }
+
+
+
 
